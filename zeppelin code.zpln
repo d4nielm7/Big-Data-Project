@@ -1,0 +1,386 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%md\n##  Finding the most frequently occurring words in HTML body of NIKE SNKRS\nDaniel Matias Suryadi Putra s1078257",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-04T18:17:39+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h2>Finding the most frequently occurring words in HTML body of NIKE SNKRS</h2>\n<p>Daniel Matias Suryadi Putra s1078257</p>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685201155109_595986944",
+      "id": "paragraph_1685201155109_595986944",
+      "dateCreated": "2023-05-27T15:25:55+0000",
+      "dateStarted": "2023-06-04T18:17:39+0000",
+      "dateFinished": "2023-06-04T18:17:40+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:181"
+    },
+    {
+      "text": "%sh\nls\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-02T11:51:29+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "20230530125455716.warc.gz\nCC-MAIN-20210423011010-20210423041010-00637.warc.gz\nCC-MAIN-20210423011010-20210423041010-00639.warc.gz\nbuild.sbt\ncc-index.paths\ncc-index1.paths\ncc-index2.paths\ncc-index3.paths\ncourse.warc.gz\nlib\nproject\nrubigdata-test.txt\nspark-warehouse\nsrc\nstream.py\ntarget\nweapons.csv\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685263613221_2135723959",
+      "id": "paragraph_1685263613221_2135723959",
+      "dateCreated": "2023-05-28T08:46:53+0000",
+      "dateStarted": "2023-06-02T11:51:29+0000",
+      "dateFinished": "2023-06-02T11:51:29+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:182"
+    },
+    {
+      "text": "//Data Exploration\r\nimport org.apache.hadoop.io.NullWritable\r\nimport de.l3s.concatgz.io.warc.{WarcGzInputFormat,WarcWritable}\r\nimport de.l3s.concatgz.data.WarcRecord\r\nval warcfile = \"nike.warc.gz\"\r\n\r\n// Overrule default SPARK CONTEXT setting\r\nimport org.apache.spark.SparkConf\r\nimport org.apache.spark.sql.SparkSession\r\nimport org.apache.spark.sql.functions._\r\nimport org.apache.spark.sql.types._\r\n\r\nval sparkConf = new SparkConf()\r\n                      .setAppName(\"RUBigData WARC4Spark 2021\")\r\n                      .set(\"spark.serializer\", \"org.apache.spark.serializer.KryoSerializer\")\r\n                      .registerKryoClasses(Array(classOf[WarcRecord]))\r\n//                      .set(\"spark.dynamicAllocation.enabled\", \"true\")\r\nimplicit val sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()\r\nval sc = sparkSession.sparkContext\r\n\r\n//Splitting Warc File into Records\r\nval warcs = sc.newAPIHadoopFile(\r\n              warcfile,\r\n              classOf[WarcGzInputFormat],             // InputFormat\r\n              classOf[NullWritable],                  // Key\r\n              classOf[WarcWritable]                   // Value\r\n    ).cache()\r\n\r\n\r\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-05T16:54:29+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.hadoop.io.NullWritable\nimport de.l3s.concatgz.io.warc.{WarcGzInputFormat, WarcWritable}\nimport de.l3s.concatgz.data.WarcRecord\n\u001b[1m\u001b[34mwarcfile\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = nike.warc.gz\nimport org.apache.spark.SparkConf\nimport org.apache.spark.sql.SparkSession\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.types._\n\u001b[1m\u001b[34msparkConf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.SparkConf\u001b[0m = org.apache.spark.SparkConf@369e4534\n\u001b[1m\u001b[34msparkSession\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@41c2a4e9\n\u001b[1m\u001b[34msc\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.SparkContext\u001b[0m = org.apache.spark.SparkContext@596b3ab\n\u001b[1m\u001b[34mwarcs\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(org.apache.hadoop.io.NullWritable, de.l3s.concatgz.io.warc.WarcWrit...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685201173793_1744809761",
+      "id": "paragraph_1685201173793_1744809761",
+      "dateCreated": "2023-05-27T15:26:13+0000",
+      "dateStarted": "2023-06-05T16:54:29+0000",
+      "dateFinished": "2023-06-05T16:54:31+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:183"
+    },
+    {
+      "text": "val nHTML = warcs.count()",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-02T12:07:26+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mnHTML\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m = 289\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://0359a6d68998:4040/jobs/job?id=0",
+              "$$hashKey": "object:532"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685467269307_261639712",
+      "id": "paragraph_1685467269307_261639712",
+      "dateCreated": "2023-05-30T17:21:09+0000",
+      "dateStarted": "2023-06-02T12:07:26+0000",
+      "dateFinished": "2023-06-02T12:07:28+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:184"
+    },
+    {
+      "text": "//print schema\r\n\r\n\r\nimport org.apache.spark.ml.feature.RegexTokenizer\r\n\r\nval warcData = spark.sparkContext.newAPIHadoopFile(warcfile, classOf[WarcGzInputFormat], classOf[NullWritable], classOf[WarcWritable])\r\nval warcRecords = warcData.map { case (_, value) => value.getRecord() }\r\nval warcDF = spark.createDataFrame(warcRecords, classOf[WarcRecord])\r\n\r\n\r\nwarcDF.printSchema() // Print the schema to identify the correct column name\r\n\r\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-02T17:45:29+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- header: struct (nullable = true)\n |    |-- contentBegin: integer (nullable = false)\n |    |-- contentLength: long (nullable = false)\n |    |-- date: string (nullable = true)\n |    |-- digest: string (nullable = true)\n |    |-- headerFieldKeys: array (nullable = true)\n |    |    |-- element: string (containsNull = true)\n |    |-- headerFields: map (nullable = true)\n |    |    |-- key: string\n |    |    |-- value: struct (valueContainsNull = true)\n |    |-- length: long (nullable = false)\n |    |-- mimetype: string (nullable = true)\n |    |-- offset: long (nullable = false)\n |    |-- readerIdentifier: string (nullable = true)\n |    |-- recordIdentifier: string (nullable = true)\n |    |-- url: string (nullable = true)\n |    |-- version: string (nullable = true)\n |-- http: boolean (nullable = false)\n |-- httpBody: binary (nullable = true)\n |-- httpHeaders: map (nullable = true)\n |    |-- key: string\n |    |-- value: string (valueContainsNull = true)\n |-- httpMimeType: string (nullable = true)\n |-- httpResponse: struct (nullable = true)\n |    |-- headerBytes: integer (nullable = false)\n |    |-- headers: array (nullable = true)\n |    |    |-- element: struct (containsNull = true)\n |    |    |    |-- name: string (nullable = true)\n |    |    |    |-- value: string (nullable = true)\n |    |-- inner: struct (nullable = true)\n |    |-- message: struct (nullable = true)\n |    |    |-- corrupt: boolean (nullable = false)\n |    |    |-- length: integer (nullable = false)\n |    |    |-- reason: string (nullable = true)\n |    |    |-- status: integer (nullable = false)\n |    |    |-- version: integer (nullable = false)\n |    |    |-- versionString: string (nullable = true)\n |-- httpStringBody: string (nullable = true)\n |-- record: struct (nullable = true)\n |    |-- digestStr: string (nullable = true)\n |    |-- header: struct (nullable = true)\n |    |    |-- contentBegin: integer (nullable = false)\n |    |    |-- contentLength: long (nullable = false)\n |    |    |-- date: string (nullable = true)\n |    |    |-- digest: string (nullable = true)\n |    |    |-- headerFieldKeys: array (nullable = true)\n |    |    |    |-- element: string (containsNull = true)\n |    |    |-- headerFields: map (nullable = true)\n |    |    |    |-- key: string\n |    |    |    |-- value: struct (valueContainsNull = true)\n |    |    |-- length: long (nullable = false)\n |    |    |-- mimetype: string (nullable = true)\n |    |    |-- offset: long (nullable = false)\n |    |    |-- readerIdentifier: string (nullable = true)\n |    |    |-- recordIdentifier: string (nullable = true)\n |    |    |-- url: string (nullable = true)\n |    |    |-- version: string (nullable = true)\n |    |-- position: long (nullable = false)\n |    |-- strict: boolean (nullable = false)\n\nimport org.apache.spark.ml.feature.RegexTokenizer\n\u001b[1m\u001b[34mwarcData\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(org.apache.hadoop.io.NullWritable, de.l3s.concatgz.io.warc.WarcWritable)]\u001b[0m = nike.warc.gz NewHadoopRDD[108] at newAPIHadoopFile at <console>:107\n\u001b[1m\u001b[34mwarcRecords\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[de.l3s.concatgz.data.WarcRecord]\u001b[0m = MapPartitionsRDD[109] at map at <console>:108\n\u001b[1m\u001b[34mwarcDF\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [header: struct<contentBegin: int, contentLength: bigint ... 11 more fields>, http: boolean ... 6 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685259793763_1630208442",
+      "id": "paragraph_1685259793763_1630208442",
+      "dateCreated": "2023-05-28T07:43:13+0000",
+      "dateStarted": "2023-06-02T17:45:29+0000",
+      "dateFinished": "2023-06-02T17:45:29+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:185"
+    },
+    {
+      "text": "// header with content-language\r\nval whs = \r\n  warcs.map { wr => wr._2 }.\r\n    filter { _.isValid() }.\r\n    map { _.getRecord().getHeader() }.\r\n    filter { _.getHeaderValue(\"WARC-Type\") == \"response\" }.\r\n    map { wh => \r\n      val contentLanguage = Option(wh.getHeaderValue(\"Content-Language\")).getOrElse(\"Unknown\")\r\n      (wh.getDate(), wh.getUrl(), wh.getContentLength(), wh.getMimetype(), contentLanguage) \r\n    }\r\n\r\nwhs.take(150).foreach(println)\r\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-02T17:45:34+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "(2023-06-02T12:05:39Z,<https://www.nike.com/nl/launch>,2069328,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:40Z,<https://www.nike.com/robots.txt>,5301,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:40Z,<https://www.nike.com/favicon.ico>,10467,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:40Z,<https://www.nike.com/assets/ncss/glyphs/2.5/css/glyphs.min.css>,5268,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:40Z,<https://www.nike.com/static/ncss/4.1/dotcom/desktop/css/ncss.nl-nl.min.css>,106637,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:40Z,<https://www.nike.com/assets/experience/dotcom-snkrs/ux/builds/AppleTouchIcon.74e2ea86f79f97e9b95a2c94b33255c7.png>,465973,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:40Z,<https://www.nike.com/assets/experience/dotcom-snkrs/ux/builds/AppleTouchIcon@2x.74e2ea86f79f97e9b95a2c94b33255c7.png>,466113,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/experience/dotcom-snkrs/ux/builds/AppleTouchIcon@3x.293f199a4994ee4bb318a6f4dcd41adb.png>,466624,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/experience/dotcom-snkrs/ux/builds/app.08aac9533678eb0c00a6.css>,52224,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/static/privacy-core/public/privacy-core.js>,100272,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/measure/data-capture/analytics-client.min.js>,116916,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/vendor/optimizely-sdk/3.5.0/optimizely.browser.umd.min.js>,124017,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/vendor/react/16.14.0/react.production.min.js>,13403,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/vendor/react/16.14.0/react-dom.production.min.js>,119726,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/vendor/redux/4.0.5/redux.min.js>,7611,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:41Z,<https://www.nike.com/assets/vendor/react-redux/7.2.9/react-redux.min.js>,16907,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/static/uxf/web-shell-client/v1/bundle.umd.js>,36232,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/assets/experience/shop-components/public/nike-shop-client.js>,7674,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/assets/experience/dotcom-snkrs/ux/builds/app.3a527b71861aa7436823.js>,1367345,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/akam/13/3e6754e3>,28014,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/p.js>,194506,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/assets/dotcom/nav/4.62.2/dotcom-nav-client.css>,100661,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:42Z,<https://www.nike.com/assets/dotcom/nav/4.62.2/dotcom-nav-client.js>,784245,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:43Z,<https://www.nike.com/assets/dotcom/nav/experiments/dotcom-nav-experiments.js>,194761,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:43Z,<https://www.nike.com/nl>,907694,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:44Z,<https://www.nike.com/nl/help>,390447,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:44Z,<https://www.nike.com/launch>,2122773,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:46Z,<https://www.nike.com/launch?s=in-stock>,2328,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:46Z,<https://www.nike.com/nl/launch?s=in-stock>,1912649,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:47Z,<https://www.nike.com/launch?s=upcoming>,2399,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:47Z,<https://www.nike.com/nl/launch?s=upcoming>,1066390,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:47Z,<https://www.nike.com/launch/t/dunk-low-clot-fragment-design-black-and-white-emea-cta>,2420,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:47Z,<https://www.nike.com/nl/launch/t/dunk-low-clot-fragment-design-black-and-white-emea-cta>,647340,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:48Z,<https://www.nike.com/launch/t/air-jordan-2-h-wings>,2354,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:48Z,<https://www.nike.com/nl/launch/t/air-jordan-2-h-wings>,645823,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:48Z,<https://www.nike.com/nl/launch/s/visionaries-julia-leboss%C3%A9-emea>,2019,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:49Z,<https://www.nike.com/nl/launch/s/visionaries-julia-leboss%C3%A9-emea/1>,54625,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:49Z,<https://www.nike.com/launch/t/nike-x-mmw-005-slides-pure-platinum>,2382,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:49Z,<https://www.nike.com/nl/launch/t/nike-x-mmw-005-slides-pure-platinum>,631815,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:50Z,<https://www.nike.com/launch/t/nike-x-mmw-005-slides-volt>,2364,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:50Z,<https://www.nike.com/nl/launch/t/nike-x-mmw-005-slides-volt>,632206,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:51Z,<https://www.nike.com/launch/t/terminator-low-university-gold-and-navy>,634531,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:51Z,<https://www.nike.com/launch/t/air-jordan-1-black-and-smoke-grey-emea-cta>,2396,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:52Z,<https://www.nike.com/nl/launch/t/air-jordan-1-black-and-smoke-grey-emea-cta>,648009,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:52Z,<https://www.nike.com/launch/t/womens-air-jordan-5-low-indigo-haze>,2382,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:52Z,<https://www.nike.com/nl/launch/t/womens-air-jordan-5-low-indigo-haze>,640724,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:53Z,<https://www.nike.com/launch/t/jordan-teyana-taylor-apparel-collection-emea>,2402,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:53Z,<https://www.nike.com/nl/launch/t/jordan-teyana-taylor-apparel-collection-emea>,707743,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:54Z,<https://www.nike.com/launch/t/air-jordan-1-zoom-cmft-2-teyana-taylor-gym-red-emea-cta>,2424,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:54Z,<https://www.nike.com/nl/launch/t/air-jordan-1-zoom-cmft-2-teyana-taylor-gym-red-emea-cta>,649221,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:54Z,<https://www.nike.com/nl/launch/s/snkrs-style-cortez-x-jenny-bang-emea>,2021,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:54Z,<https://www.nike.com/nl/launch/s/snkrs-style-cortez-x-jenny-bang-emea/1>,47037,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:55Z,<https://www.nike.com/nl/launch/s/snkrs-style-cortez-klara-emea>,2005,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:55Z,<https://www.nike.com/nl/launch/s/snkrs-style-cortez-klara-emea/1>,68951,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:56Z,<https://www.nike.com/launch/t/womens-cortez-gorge-green-and-malachite>,2390,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:56Z,<https://www.nike.com/nl/launch/t/womens-cortez-gorge-green-and-malachite>,642596,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:56Z,<https://www.nike.com/launch/t/acg-watercat-phantom-emea-cta>,2370,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:56Z,<https://www.nike.com/nl/launch/t/acg-watercat-phantom-emea-cta>,636559,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:57Z,<https://www.nike.com/launch/t/nocta-hot-step-light-bone>,2362,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:57Z,<https://www.nike.com/nl/launch/t/nocta-hot-step-light-bone>,646231,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:58Z,<https://www.nike.com/launch/t/nocta-distant-regards-apparel-collection-static>,2408,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:58Z,<https://www.nike.com/nl/launch/t/nocta-distant-regards-apparel-collection-static>,743971,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:58Z,<https://www.nike.com/launch/t/womens-dunk-low-gold-suede-emea-cta>,2382,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:59Z,<https://www.nike.com/nl/launch/t/womens-dunk-low-gold-suede-emea-cta>,645210,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:59Z,<https://www.nike.com/launch/t/air-max-1-mica-green>,2423,application/http;msgtype=response,Unknown)\n(2023-06-02T12:05:59Z,<https://www.nike.com/nl/launch/t/air-max-1-mica-green>,642417,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:00Z,<https://www.nike.com/nl/launch/s/behind-the-design-air-jordan-1-next-chapter-part-2>,2050,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:00Z,<https://www.nike.com/nl/launch/s/behind-the-design-air-jordan-1-next-chapter-part-2/1>,57974,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:01Z,<https://www.nike.com/nl/launch/s/behind-the-design-air-jordan-1-next-chapter-part-1>,2050,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:01Z,<https://www.nike.com/nl/launch/s/behind-the-design-air-jordan-1-next-chapter-part-1/1>,50540,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:01Z,<https://www.nike.com/launch/t/air-max-1-crepe-light-bone>,2366,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:02Z,<https://www.nike.com/nl/launch/t/air-max-1-crepe-light-bone>,644271,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:04Z,<https://www.nike.com/launch/t/air-jordan-1-sail-and-pale-vanilla>,2380,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:04Z,<https://www.nike.com/nl/launch/t/air-jordan-1-sail-and-pale-vanilla>,648158,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:05Z,<https://www.nike.com/launch/t/womens-zoom-vomero-5-wolf-grey-and-black>,2392,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:05Z,<https://www.nike.com/nl/launch/t/womens-zoom-vomero-5-wolf-grey-and-black>,642407,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:05Z,<https://www.nike.com/launch/t/air-max-1-coral-stardust-corduroy>,2378,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:05Z,<https://www.nike.com/nl/launch/t/air-max-1-coral-stardust-corduroy>,643922,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:06Z,<https://www.nike.com/launch/t/air-humara-wheat-grass>,2356,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:06Z,<https://www.nike.com/nl/launch/t/air-humara-wheat-grass>,641218,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:07Z,<https://www.nike.com/launch/t/air-jordan-1-low-white-and-coconut-milk>,2392,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:07Z,<https://www.nike.com/nl/launch/t/air-jordan-1-low-white-and-coconut-milk>,648115,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:08Z,<https://www.nike.com/launch/t/air-max-1-escape>,2344,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:08Z,<https://www.nike.com/nl/launch/t/air-max-1-escape>,643278,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:09Z,<https://www.nike.com/launch/t/air-jordan-6-toro-bravo-emea>,2370,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:09Z,<https://www.nike.com/nl/launch/t/air-jordan-6-toro-bravo-emea>,637574,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:09Z,<https://www.nike.com/nl/launch/s/street-snkrs-tower-hamlets-emea>,2011,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:10Z,<https://www.nike.com/nl/launch/s/street-snkrs-tower-hamlets-emea/1>,48752,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:10Z,<https://www.nike.com/launch/t/air-force-1-university-gold-emea>,2376,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:10Z,<https://www.nike.com/nl/launch/t/air-force-1-university-gold-emea>,642954,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:11Z,<https://www.nike.com/launch/t/acg-moc-summit-white-and-black>,2440,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:11Z,<https://www.nike.com/nl/launch/t/acg-moc-summit-white-and-black>,643204,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:11Z,<https://www.nike.com/launch/t/acg-moc-moss-and-anthracite-emea>,2376,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:11Z,<https://www.nike.com/nl/launch/t/acg-moc-moss-and-anthracite-emea>,641619,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:12Z,<https://www.nike.com/launch/t/air-jordan-5-craft-emea>,2358,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:12Z,<https://www.nike.com/nl/launch/t/air-jordan-5-craft-emea>,643817,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:13Z,<https://www.nike.com/nl/launch/s/air-jordan-4-thunder-free-the-youth-off-feed-emea>,2046,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:13Z,<https://www.nike.com/nl/launch/s/air-jordan-4-thunder-free-the-youth-off-feed-emea/1>,45262,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:14Z,<https://www.nike.com/nl/launch/s/the-drop-off-sb-dunk-low-x-jarritos-phanton-and-malachite>,2064,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:14Z,<https://www.nike.com/nl/launch/s/the-drop-off-sb-dunk-low-x-jarritos-phanton-and-malachite/1>,58018,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:14Z,<https://www.nike.com/launch/t/nike-sb-jarritos-apparel-collection-emea>,2392,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:14Z,<https://www.nike.com/nl/launch/t/nike-sb-jarritos-apparel-collection-emea>,672012,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:15Z,<https://www.nike.com/launch/t/nike-sb-dunk-low-desert-ochre-and-midnight-navy-emea>,2416,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:15Z,<https://www.nike.com/nl/launch/t/nike-sb-dunk-low-desert-ochre-and-midnight-navy-emea>,643279,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:16Z,<https://www.nike.com/launch/t/womens-air-max-plus-sand-drift-emea>,2382,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:16Z,<https://www.nike.com/nl/launch/t/womens-air-max-plus-sand-drift-emea>,646103,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:17Z,<https://www.nike.com/launch/t/womens-air-force-1-07-summit-white-and-gorge-green-emea>,2421,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:17Z,<https://www.nike.com/nl/launch/t/womens-air-force-1-07-summit-white-and-gorge-green-emea>,647570,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:18Z,<https://www.nike.com/launch/t/womens-air-rift-camo-vivid-orange>,2380,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:18Z,<https://www.nike.com/nl/launch/t/womens-air-rift-camo-vivid-orange>,639327,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:19Z,<https://www.nike.com/nl/launch/s/snkrs-live-highlights-swoosh-sessions-our-force-1>,2048,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:19Z,<https://www.nike.com/nl/launch/s/snkrs-live-highlights-swoosh-sessions-our-force-1/1>,61551,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:19Z,<https://www.nike.com/nl/launch/s/behind-the-design-kobe-4-protro-mambacita>,2031,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:20Z,<https://www.nike.com/nl/launch/s/behind-the-design-kobe-4-protro-mambacita/1>,58687,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:20Z,<https://www.nike.com/launch/t/kobe-4-protro-mambacita>,2358,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:20Z,<https://www.nike.com/nl/launch/t/kobe-4-protro-mambacita>,644507,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:21Z,<https://www.nike.com/launch/t/zoom-vomero-5-mystic-navy-and-worn-blue>,2392,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:21Z,<https://www.nike.com/nl/launch/t/zoom-vomero-5-mystic-navy-and-worn-blue>,642604,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:22Z,<https://www.nike.com/launch/t/dunk-low-team-red-and-white-emea>,2376,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:22Z,<https://www.nike.com/nl/launch/t/dunk-low-team-red-and-white-emea>,643189,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:23Z,<https://www.nike.com/launch/t/womens-air-max-1-sanddrift>,2364,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:23Z,<https://www.nike.com/nl/launch/t/womens-air-max-1-sanddrift>,646212,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:24Z,<https://www.nike.com/launch/t/su23-air-force-1-color-of-the-month-1-emea>,2396,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:24Z,<https://www.nike.com/nl/launch/t/su23-air-force-1-color-of-the-month-1-emea>,649728,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:24Z,<https://www.nike.com/nl/launch/s/snkrs-style-kids-of-immigrants-air-max-1-86-emea>,2046,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:24Z,<https://www.nike.com/nl/launch/s/snkrs-style-kids-of-immigrants-air-max-1-86-emea/1>,45888,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:25Z,<https://www.nike.com/nl/launch/s/member-days-jrc-x-talking-crews-emea>,2019,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:25Z,<https://www.nike.com/nl/launch/s/member-days-jrc-x-talking-crews-emea/1>,46274,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:25Z,<https://www.nike.com/launch/t/dunk-low-mica-green-emea-cta>,2368,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:26Z,<https://www.nike.com/nl/launch/t/dunk-low-mica-green-emea-cta>,642735,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:26Z,<https://www.nike.com/eg/>,506992,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:27Z,<https://www.nike.com/ma/en/>,506709,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:28Z,<https://www.nike.com/ma/>,511767,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:28Z,<https://www.nike.com/za/>,867181,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:29Z,<https://www.nike.com/ca/>,873905,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:30Z,<https://www.nike.com/ca/fr/>,887903,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:32Z,<https://www.nike.com/mx/>,878774,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:33Z,<https://www.nike.com/pr/>,511269,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:34Z,<https://www.nike.com/>,1694,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:34Z,<https://www.nike.com/nl/>,907739,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:34Z,<https://www.nike.com/us/es/>,995252,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:36Z,<https://www.nike.com/uy/>,517850,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:37Z,<https://www.nike.com/xl/>,511310,application/http;msgtype=response,Unknown)\n(2023-06-02T12:06:38Z,<https://www.nike.com/au/>,807420,application/http;msgtype=response,Unknown)\n\u001b[1m\u001b[34mwhs\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(String, String, Long, String, Object)]\u001b[0m = MapPartitionsRDD[115] at map at <console>:109\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://0359a6d68998:4040/jobs/job?id=19",
+              "$$hashKey": "object:618"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685293572247_862095099",
+      "id": "paragraph_1685293572247_862095099",
+      "dateCreated": "2023-05-28T17:06:12+0000",
+      "dateStarted": "2023-06-02T17:45:34+0000",
+      "dateFinished": "2023-06-02T17:45:35+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:186"
+    },
+    {
+      "text": "import org.jsoup.Jsoup\r\nimport org.jsoup.nodes.{Document, Element}\r\nimport collection.JavaConverters._\r\n\r\nval wb = warcs.map { wr => wr._2.getRecord().getHttpStringBody() }.\r\n  map { wb => Jsoup.parse(wb).body().text() }\r\n\r\n// Splitting the words and excluding numbers and curly braces\r\nval wordCounts = wb.flatMap { _.split(\"\\\\s+\") }\r\n  .map(_.toLowerCase)\r\n  .filter(word => word.matches(\"[a-zA-Z]+\"))\r\n\r\n// Count the occurrence of each word\r\nval frequencyCounts = wordCounts.groupBy(identity).mapValues(_.size)\r\n\r\n// Display the top 10 words as a table\r\nval topWords = frequencyCounts.takeOrdered(10)(Ordering[Int].reverse.on(_._2))\r\n\r\n// Print the table\r\nprintln(\"+------------+-------+\")\r\nprintln(\"|   Word     | Count |\")\r\nprintln(\"+------------+-------+\")\r\ntopWords.foreach { case (word, count) =>\r\n  printf(\"| %-10s | %-5d |\\n\", word, count)\r\n}\r\nprintln(\"+------------+-------+\")\r\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-06-05T16:55:37+0000",
+      "progress": 100,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+-------+\n|   Word     | Count |\n+------------+-------+\n| nike       | 1457  |\n| de         | 879   |\n| en         | 540   |\n| new        | 477   |\n| and        | 475   |\n| in         | 467   |\n| to         | 355   |\n| air        | 338   |\n| the        | 267   |\n| only       | 260   |\n+------------+-------+\nimport org.jsoup.Jsoup\nimport org.jsoup.nodes.{Document, Element}\nimport collection.JavaConverters._\n\u001b[1m\u001b[34mwb\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = MapPartitionsRDD[11] at map at <console>:52\n\u001b[1m\u001b[34mwordCounts\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m = MapPartitionsRDD[14] at filter at <console>:57\n\u001b[1m\u001b[34mfrequencyCounts\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[(String, Int)]\u001b[0m = MapPartitionsRDD[17] at mapValues at <console>:60\n\u001b[1m\u001b[34mtopWords\u001b[0m: \u001b[1m\u001b[32mArray[(String, Int)]\u001b[0m = Array((nike,1457), (de,879), (en,540), (new,477), (and,475), (in,467), (to,355), (air,338), (the,267), (only,260))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://0359a6d68998:4040/jobs/job?id=1",
+              "$$hashKey": "object:664"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685709208334_2069778998",
+      "id": "paragraph_1685709208334_2069778998",
+      "dateCreated": "2023-06-02T12:33:28+0000",
+      "dateStarted": "2023-06-05T16:55:37+0000",
+      "dateFinished": "2023-06-05T16:55:39+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:187"
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1685984047388_175452288",
+      "id": "paragraph_1685984047388_175452288",
+      "dateCreated": "2023-06-05T16:54:07+0000",
+      "status": "READY",
+      "$$hashKey": "object:188"
+    }
+  ],
+  "name": "prototype",
+  "id": "2HZJSKJN1",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/prototype"
+}

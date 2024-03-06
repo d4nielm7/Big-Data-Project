@@ -1,0 +1,82 @@
+package org.rubigdata
+
+import org.apache.hadoop.io.NullWritable
+import de.l3s.concatgz.io.warc.{WarcGzInputFormat,WarcWritable}
+import de.l3s.concatgz.data.WarcRecord
+import org.jsoup.Jsoup
+import org.jsoup.nodes.{Document,Element}
+import collection.JavaConverters._
+
+object RUBigDataApp {
+  def main(args: Array[String]): Unit = {
+    // Overrule default SPARK CONTEXT setting
+    import org.apache.spark.SparkConf
+    import org.apache.spark.sql.SparkSession
+    import org.apache.spark.sql.functions._
+    import org.apache.spark.sql.types._
+    val warcfile = "hdfs:///user/s1078257/nike.warc.gz"
+
+    val sparkConf = new SparkConf()
+      .setAppName("RUBigData WARC4Spark 2021")
+      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+      .registerKryoClasses(Array(classOf[WarcRecord]))
+    //                      .set("spark.dynamicAllocation.enabled", "true")
+    implicit val sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()
+    val sc = sparkSession.sparkContext
+
+    //Splitting Warc File into Records
+    val warcs = sc.newAPIHadoopFile(
+      warcfile,
+      classOf[WarcGzInputFormat],             // InputFormat
+      classOf[NullWritable],                  // Key
+      classOf[WarcWritable]                   // Value
+    ).cache()
+
+
+    val warcData = sparkSession.sparkContext.newAPIHadoopFile(warcfile, classOf[WarcGzInputFormat], classOf[NullWritable], classOf[WarcWritable])
+    val warcRecords = warcData.map { case (_, value) => value.getRecord() }
+    val warcDF = sparkSession.createDataFrame(warcRecords, classOf[WarcRecord])
+
+    //warcDF.printSchema() // Print the schema to identify the correct column name
+
+    // header with content-language
+    val whs =
+      warcs.map { wr => wr._2 }.
+        filter { _.isValid() }.
+        map { _.getRecord().getHeader() }.
+        filter { _.getHeaderValue("WARC-Type") == "response" }.
+        map { wh =>
+          val contentLanguage = Option(wh.getHeaderValue("Content-Language")).getOrElse("Unknown")
+          (wh.getDate(), wh.getUrl(), wh.getContentLength(), wh.getMimetype(), contentLanguage)
+        }
+
+    //whs.take(150).foreach(println)
+
+
+     //Data Extraction
+   val wb = warcs.map { wr => wr._2.getRecord().getHttpStringBody() }.
+  map { wb => Jsoup.parse(wb).body().text() }
+
+// Splitting the words and excluding numbers and curly braces
+val wordCounts = wb.flatMap { _.split("\\s+") }
+  .map(_.toLowerCase)
+  .filter(word => word.matches("[a-zA-Z]+"))
+
+// Count the occurrence of each word
+val frequencyCounts = wordCounts.groupBy(identity).mapValues(_.size)
+
+// Display the top 10 words as a table
+val topWords = frequencyCounts.takeOrdered(10)(Ordering[Int].reverse.on(_._2))
+
+// Print the table
+println("+------------+-------+")
+println("|   Word     | Count |")
+println("+------------+-------+")
+topWords.foreach { case (word, count) =>
+  printf("| %-10s | %-5d |\n", word, count)
+}
+println("+------------+-------+")
+
+    sparkSession.stop()
+  }
+}
